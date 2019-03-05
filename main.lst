@@ -1,0 +1,185 @@
+   1               		.file	"main.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               	.global	adc_init
+  18               	adc_init:
+  19               	.LFB8:
+  20               	.LM1:
+  21               	/* prologue: function */
+  22               	/* frame size = 0 */
+  23               	.LM2:
+  24 0000 80E4      		ldi r24,lo8(64)
+  25 0002 8093 7C00 		sts 124,r24
+  26               	.LM3:
+  27 0006 EAE7      		ldi r30,lo8(122)
+  28 0008 F0E0      		ldi r31,hi8(122)
+  29 000a 86E8      		ldi r24,lo8(-122)
+  30 000c 8083      		st Z,r24
+  31               	.LM4:
+  32 000e 8081      		ld r24,Z
+  33 0010 8064      		ori r24,lo8(64)
+  34 0012 8083      		st Z,r24
+  35               	/* epilogue start */
+  36               	.LM5:
+  37 0014 0895      		ret
+  38               	.LFE8:
+  40               	.global	adc_read
+  42               	adc_read:
+  43               	.LFB9:
+  44               	.LM6:
+  45               	.LVL0:
+  46               	/* prologue: function */
+  47               	/* frame size = 0 */
+  48               	.LM7:
+  49 0016 9091 7C00 		lds r25,124
+  50 001a 8770      		andi r24,lo8(7)
+  51               	.LVL1:
+  52 001c 987F      		andi r25,lo8(-8)
+  53 001e 892B      		or r24,r25
+  54 0020 8093 7C00 		sts 124,r24
+  55               	.LM8:
+  56 0024 8091 7A00 		lds r24,122
+  57 0028 8064      		ori r24,lo8(64)
+  58 002a 8093 7A00 		sts 122,r24
+  59               	.L4:
+  60               	.LM9:
+  61 002e 8091 7A00 		lds r24,122
+  62 0032 86FD      		sbrc r24,6
+  63 0034 00C0      		rjmp .L4
+  64               	.LM10:
+  65 0036 2091 7800 		lds r18,120
+  66 003a 4091 7900 		lds r20,121
+  67 003e 942F      		mov r25,r20
+  68 0040 80E0      		ldi r24,lo8(0)
+  69 0042 30E0      		ldi r19,lo8(0)
+  70 0044 822B      		or r24,r18
+  71 0046 932B      		or r25,r19
+  72 0048 9595      		asr r25
+  73 004a 8795      		ror r24
+  74 004c 9595      		asr r25
+  75 004e 8795      		ror r24
+  76               	.LM11:
+  77 0050 8058      		subi r24,lo8(-(-128))
+  78               	/* epilogue start */
+  79 0052 0895      		ret
+  80               	.LFE9:
+  82               	.global	main
+  84               	main:
+  85               	.LFB10:
+  86               	.LM12:
+  87               	/* prologue: function */
+  88               	/* frame size = 0 */
+  89               	.LM13:
+  90               	/* #APP */
+  91               	 ;  57 "main.c" 1
+  92 0054 7894      		sei
+  93               	 ;  0 "" 2
+  94               	/* #NOAPP */
+  95               	.LBB4:
+  96               	.LBB5:
+  97               	.LM14:
+  98 0056 80E4      		ldi r24,lo8(64)
+  99 0058 8093 7C00 		sts 124,r24
+ 100               	.LM15:
+ 101 005c 86E8      		ldi r24,lo8(-122)
+ 102 005e 8093 7A00 		sts 122,r24
+ 103               	.LM16:
+ 104 0062 8091 7A00 		lds r24,122
+ 105 0066 8064      		ori r24,lo8(64)
+ 106 0068 8093 7A00 		sts 122,r24
+ 107               	.LBE5:
+ 108               	.LBE4:
+ 109               	.LM17:
+ 110 006c 8FEF      		ldi r24,lo8(-1)
+ 111 006e 84B9      		out 36-32,r24
+ 112               	.L11:
+ 113               	.LM18:
+ 114 0070 80E0      		ldi r24,lo8(0)
+ 115 0072 0E94 0000 		call adc_read
+ 116 0076 8093 0000 		sts inc,r24
+ 117               	.LM19:
+ 118 007a 2091 0000 		lds r18,xf
+ 119 007e 280F      		add r18,r24
+ 120 0080 2093 0000 		sts xf,r18
+ 121               	.LM20:
+ 122 0084 2093 0000 		sts x,r18
+ 123               	.LM21:
+ 124 0088 90E0      		ldi r25,lo8(0)
+ 125 008a 1816      		cp __zero_reg__,r24
+ 126 008c 04F4      		brge .L8
+ 127 008e 91E0      		ldi r25,lo8(1)
+ 128               	.L8:
+ 129 0090 9093 0000 		sts sign1,r25
+ 130 0094 8091 0000 		lds r24,xp
+ 131               	.LM22:
+ 132 0098 9923      		tst r25
+ 133 009a 01F0      		breq .L9
+ 134               	.LM23:
+ 135 009c 2817      		cp r18,r24
+ 136 009e 00F4      		brsh .L10
+ 137 00a0 00C0      		rjmp .L13
+ 138               	.L9:
+ 139               	.LM24:
+ 140 00a2 8217      		cp r24,r18
+ 141 00a4 00F4      		brsh .L10
+ 142               	.L13:
+ 143               	.LM25:
+ 144 00a6 85B1      		in r24,37-32
+ 145 00a8 8095      		com r24
+ 146 00aa 85B9      		out 37-32,r24
+ 147               	.L10:
+ 148               	.LM26:
+ 149 00ac 2093 0000 		sts xp,r18
+ 150 00b0 00C0      		rjmp .L11
+ 151               	.LFE10:
+ 153               	.global	xf
+ 154               	.global	xf
+ 155               		.section .bss
+ 158               	xf:
+ 159 0000 00        		.skip 1,0
+ 160               	.global	x
+ 161               	.global	x
+ 164               	x:
+ 165 0001 00        		.skip 1,0
+ 166               	.global	xi
+ 167               	.global	xi
+ 170               	xi:
+ 171 0002 00        		.skip 1,0
+ 172               	.global	sign1
+ 173               	.global	sign1
+ 176               	sign1:
+ 177 0003 00        		.skip 1,0
+ 178               		.comm a,2,1
+ 179               		.comm i,1,1
+ 180               		.comm loader,1,1
+ 181               		.comm inc,1,1
+ 182               		.comm xp,1,1
+ 223               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+C:\Users\chibi\AppData\Local\Temp/ccp9fEe8.s:2      *ABS*:0000003f __SREG__
+C:\Users\chibi\AppData\Local\Temp/ccp9fEe8.s:3      *ABS*:0000003e __SP_H__
+C:\Users\chibi\AppData\Local\Temp/ccp9fEe8.s:4      *ABS*:0000003d __SP_L__
+C:\Users\chibi\AppData\Local\Temp/ccp9fEe8.s:5      *ABS*:00000034 __CCP__
+C:\Users\chibi\AppData\Local\Temp/ccp9fEe8.s:6      *ABS*:00000000 __tmp_reg__
+C:\Users\chibi\AppData\Local\Temp/ccp9fEe8.s:7      *ABS*:00000001 __zero_reg__
+C:\Users\chibi\AppData\Local\Temp/ccp9fEe8.s:18     .text:00000000 adc_init
+C:\Users\chibi\AppData\Local\Temp/ccp9fEe8.s:42     .text:00000016 adc_read
+C:\Users\chibi\AppData\Local\Temp/ccp9fEe8.s:84     .text:00000054 main
+                            *COM*:00000001 inc
+C:\Users\chibi\AppData\Local\Temp/ccp9fEe8.s:158    .bss:00000000 xf
+C:\Users\chibi\AppData\Local\Temp/ccp9fEe8.s:164    .bss:00000001 x
+C:\Users\chibi\AppData\Local\Temp/ccp9fEe8.s:176    .bss:00000003 sign1
+                            *COM*:00000001 xp
+C:\Users\chibi\AppData\Local\Temp/ccp9fEe8.s:170    .bss:00000002 xi
+                            *COM*:00000002 a
+                            *COM*:00000001 i
+                            *COM*:00000001 loader
+
+UNDEFINED SYMBOLS
+__do_clear_bss
